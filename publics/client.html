@@ -65,13 +65,13 @@
            //console.log(key);
            //console.log(value);
         }
-        alert(JSON.stringify(ajax_object))
+        
         ajax_url = document.getElementById("URL").value;
-        alert(ajax_url);
+        
         var myselect = document.getElementById("select_method");
         var index = myselect.selectedIndex;
         method = myselect.options[index].value;
-        alert(method);
+        
 
         //ajax http request
         $.ajax({
