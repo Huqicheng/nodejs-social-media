@@ -1,3 +1,12 @@
+/**
+* Module Name: models.user
+*
+* @description: definition of user schema and operations based on it.
+*
+* @author huqicheng
+* @version 1.0
+*/
+
 var mongoose = require('./db.js'),
     Schema = mongoose.Schema;
 
@@ -14,6 +23,17 @@ var UserSchema = new Schema({
 var User = mongoose.model('User',UserSchema); 
 
 
+/**
+*
+-------------------------------------------
+* @method insertOneUser
+* @module user
+-------------------------------------------
+* @param {Object} userObj: the user object inserted to db
+* @param {function} callback: callback function (err, result)
+-------------------------------------------
+* @return {} 
+*/
 exports.insertOneUser = function(userObj, callback){
 	var user = new User(userObj);
 
@@ -63,7 +83,7 @@ exports.deleteUser = function(whereJson, callback){
 	});
 }
 
-exports.findUser = function(whereJson, options, callback){
+exports.findUser = function(whereJson, callback, options){
 	User.find(whereJson, options, function(err, result){
 		if (err) {
 			Console.log("Error:" + err);

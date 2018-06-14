@@ -19,7 +19,7 @@ app.use(session({
 app.set("view engine","ejs");
 app.set('views', path.join(__dirname, 'views'));
 // static resources
-app.use(express.static('./public'));
+app.use(express.static('./publics'));
 
 
 routes(app);
