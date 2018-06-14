@@ -3,8 +3,12 @@
   <head> 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
   </script> 
-  </head>
 
+  <title>Http Tester Client</title>
+  </head>
+<center>
+  <h1>Http Client</h1>
+  <div>
   <select id = "select_method">
     <option value ="GET">GET</option>
     <option value ="POST">POST</option>
@@ -22,8 +26,12 @@
     <button type="button" class="add_field_button">Add Row</button>
     <button type="button" class="remove_field_button">Remove Row</button>
   </div>
-  
-
+</div>
+<div>
+  <p>result:</p>
+  <textarea id="result" readonly cols="50" rows="20"></textarea>
+</div>
+</center>
   <script>
     var max_fields      = 10;
     var wrapper         = $(".wrapper_field"); 
@@ -81,7 +89,7 @@
                async: true,
 
                success: function(result){
-                    alert(result);
+                    document.getElementById("result").innerHTML = JSON.stringify(JSON.parse(result), undefined, 2);
                 }
             });
         

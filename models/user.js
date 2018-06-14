@@ -49,7 +49,7 @@ exports.insertOneUser = function(userObj, callback){
 
 
 exports.updateUser = function(whereJson, updateJson, callback){
-	User.update(whereStr, updateStr, function(err, result){
+	User.update(whereJson, updateJson, function(err, result){
 		if (err) {
 			Console.log("Error:" + err);
 			return;
