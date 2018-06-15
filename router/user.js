@@ -27,6 +27,14 @@ router.get("/", middlewares.checkLogin.checkLogin,function(req, res, next) {
 	});
 });
 
+router.post("/updateSettings", middlewares.checkLogin.checkLogin,
+			middlewares.body_parser.parse_form, function(req, res, next){
+
+	var response = response_result(constants.success, req.query.fields);
+	res.end(JSON.stringify(response));
+
+});
+
 router.post("/setAvatar", middlewares.checkLogin.checkLogin, function(req, res, next){
 	var form = new formidable.IncomingForm();
     form.uploadDir = path.normalize(__dirname + "/../updates/avatars");
