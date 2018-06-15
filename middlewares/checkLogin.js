@@ -1,8 +1,11 @@
+var constants = require("../configurations/constants.js");
+var response_result = require("../models/response_result.js");
+
 module.exports = {
 	checkLogin: function checkLogin(req, res, next) {
-		console.log(req.url);
-		if(!req.session.user) {
-			res.end("300");
+		if(!req.session.username) {
+			var response = response_result(constants.res_login_first, "login first");
+			res.send(JSON.stringify(response));
 			return;
 		}
 

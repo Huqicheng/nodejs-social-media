@@ -8,9 +8,10 @@ var response_result = require("../models/response_result.js");
 var post_form_utils = require("../utils/post_form_utils.js");
 var constants = require("../configurations/constants.js");
 
+var middlewares = require("../middlewares")
 // /user/      to get user information. 
 // just for testing
-router.get("/",function(req, res, next) {
+router.get("/", middlewares.checkLogin.checkLogin,function(req, res, next) {
 	let username = req.query.username;
 	user_db.findUser({username:username}, function(err, result){
 		console.log(username)
@@ -26,7 +27,7 @@ router.get("/",function(req, res, next) {
 	});
 });
 
-router.post("/setAvatar", function(req, res, next){
+router.post("/setAvatar", middlewares.checkLogin.checkLogin, function(req, res, next){
 	var form = new formidable.IncomingForm();
     form.uploadDir = path.normalize(__dirname + "/../updates/avatars");
     form.parse(req, function (err, fields, files) {
@@ -44,6 +45,13 @@ router.post("/setAvatar", function(req, res, next){
 			res.end(JSON.stringify(response));
         });
     });
+});
+
+router.post("/updatePassword", middlewares.checkLogin.checkLogin, function(req, res, next){
+	async.waterfall(
+		[
+		
+		])
 });
 
 router.post("/login",function(req, res, next) {
@@ -64,7 +72,8 @@ router.post("/login",function(req, res, next) {
 					{username : username, password : password}, 
 					function(err, result){
 						return next(err,result);
-					}
+					},
+					{password:0}
 				);
 			},
 
@@ -76,20 +85,20 @@ router.post("/login",function(req, res, next) {
 				user_db.updateUser(
 					{username : username},
 					{logindate : new Date()},
-					function(err, result){
-						return next(err, result, username);	
+					function(err, result2){
+						return next(err, result2, result[0]);	
 					}
 				);
 			}
 		],
-		function(err, result, username) {
+		function(err, result, user) {
 			if (err) {
-				var response = response_result(constants.failed, err);
+				var response = response_result(constants.failed, err.message);
 				res.send(JSON.stringify(response));
 			} else {
 				// keep the session status as signed in 
-				req.session.username = username;
-				var response = response_result(constants.success, null);
+				req.session.username = user.username;
+				var response = response_result(constants.success, user);
 				res.send(JSON.stringify(response));
 			}	
 		}
