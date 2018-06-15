@@ -32,13 +32,25 @@
   <textarea id="result" readonly cols="50" rows="20"></textarea>
 </div>
 </center>
+
+  <style>
+    #URL {
+        width : 500px;
+    }
+    .key{
+        width: 150px;
+    }
+    .value{
+        width: 150px;
+    }
+  </style>
+
   <script>
     var max_fields      = 10;
     var wrapper         = $(".wrapper_field"); 
     var total_fields = wrapper.length;
     //var add_button      = $(".add_field_button");
     //var remove_button   = $(".remove_field_button");
-
     $(".add_field_button").click(function(e){
         e.preventDefault();
         //var wrapper  = $(".wrapper_field"); 
@@ -80,14 +92,12 @@
         var index = myselect.selectedIndex;
         method = myselect.options[index].value;
         
-
         //ajax http request
         $.ajax({
                url: ajax_url,
                data: ajax_object,
                type: method,
                async: true,
-
                success: function(result){
                     document.getElementById("result").innerHTML = JSON.stringify(JSON.parse(result), undefined, 2);
                 }
