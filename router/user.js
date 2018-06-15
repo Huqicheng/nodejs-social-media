@@ -47,11 +47,116 @@ router.post("/setAvatar", middlewares.checkLogin.checkLogin, function(req, res, 
     });
 });
 
+
+router.post("/register", function(req, res, next){
+	async.waterfall(
+		[
+			// parse form
+			function(callback){
+				var form = new formidable.IncomingForm()
+				form.parse(req, function(err, fields, files){
+					callback(null, fields);
+				});
+			},
+			// verify username: existed or not
+			function(fields, callback){
+				var username = fields.username;
+				user_db.findUser(
+					{username : username}, 
+					function(err, result){
+						if (err) {
+							return callback(err);
+						}
+
+						if (result.length >= 1) {
+							return callback(new Error("Username existed."));
+						}
+
+						return callback(err,fields);
+					},
+					{password:0}
+				);
+			},
+			//register
+			function(fields, callback){
+				var newUser = {
+						username: fields.username,
+						password: fields.password,
+						age : 0,
+						logindate : new Date(),
+						gender : 0
+					};
+				user_db.insertOneUser(
+					newUser,
+					function(err, result){
+						return callback(err, newUser);
+					}
+				)
+			}
+		],
+		function(err, newUser){
+			if (err) {
+				var response = response_result(constants.failed, err.message);
+				res.send(JSON.stringify(response));
+				return;
+			}
+
+			req.session.username = newUser.username;
+			var response = response_result(constants.success, newUser);
+			res.send(JSON.stringify(response));
+		}
+	);
+});
+
 router.post("/updatePassword", middlewares.checkLogin.checkLogin, function(req, res, next){
 	async.waterfall(
 		[
-		
-		])
+			// parse form
+			function(callback){
+				var form = new formidable.IncomingForm()
+				form.parse(req, function(err, fields, files){
+					callback(null, fields);
+				});
+			},
+			// verify user
+			function(fields, callback){
+				var username = fields.username;
+				var password = fields.password;
+				var newPassword = fields.newPassword;
+				user_db.findUser(
+					{username : username, password : password}, 
+					function(err, result){
+						return callback(err,result,newPassword);
+					},
+					{password:0}
+				);
+			},
+			// update password
+			function(user, newPassword, callback){
+				if (user.length != 1) {
+					return callback(new Error("The original password is wrong."));
+				}
+				var username = user[0].username;
+				user_db.updateUser(
+					{username : username},
+					{password : newPassword},
+					function(err, result2){
+						return callback(err, result2, user[0]);	
+					}
+				);
+			}
+		],
+		function(err, result, user){
+			if (err) {
+				var response = response_result(constants.failed, err.message);
+				res.send(JSON.stringify(response));
+				return;
+			} else {
+				var response = response_result(constants.success, user);
+				res.send(JSON.stringify(response));
+			}	
+		}
+	);
 });
 
 router.post("/login",function(req, res, next) {
@@ -105,8 +210,5 @@ router.post("/login",function(req, res, next) {
 	);
 	
 });// router.post
-
-
-
 
 exports.router = router;
