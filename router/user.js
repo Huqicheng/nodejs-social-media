@@ -219,4 +219,10 @@ router.post("/login",function(req, res, next) {
 	
 });// router.post
 
+router.post("/logout", function(req, res, next){
+	req.session.username = null;
+	var response = response_result(constants.success);
+	res.send(JSON.stringify(response));
+});
+
 exports.router = router;

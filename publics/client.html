@@ -100,6 +100,15 @@
                async: true,
                success: function(result){
                     document.getElementById("result").innerHTML = JSON.stringify(JSON.parse(result), undefined, 2);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                  result = {
+                      error: "Error happens while requesting!!!!!!!!!!",
+                      jqXHR: jqXHR,
+                      textStatus: textStatus,
+                      errorThrown: errorThrown
+                  };
+                  document.getElementById("result").innerHTML = JSON.stringify(result, undefined, 2);
                 }
             });
         
