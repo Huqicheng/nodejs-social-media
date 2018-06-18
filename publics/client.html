@@ -17,10 +17,7 @@
   <input type="text" id = "URL" placeholder="URL" >
   <button type="submit" onclick="submitReq()">Submit</button>
   <div class="wrapper_field">
-    <div class="key-value-pair">
-      <input type="text" class = "key" placeholder="key1" id = "11" >
-      <input type="text" class = "value" placeholder="value1" id = "12" >
-    </div>
+    
   </div>
   <div>
     <button type="button" class="add_field_button">Add Row</button>
@@ -55,14 +52,15 @@
         e.preventDefault();
         //var wrapper  = $(".wrapper_field"); 
         if(total_fields < max_fields){
-            total_fields++;
+            
         $(".wrapper_field").append('<div class = "key-value-pair"><input type="text" class = "key" placeholder="key'+total_fields+'" id = '+total_fields+'1> <input type="text" class = "value" placeholder="value'+total_fields+'" id = '+total_fields+'2></div>');
+        total_fields++;
       }
       //return false;
     });
     $(".remove_field_button").click(function(e){
       e.preventDefault();
-      var total_fields = wrapper[0].childNodes.length;
+      //var total_fields = wrapper[0].childNodes.length;
       if(total_fields>1){
         wrapper[0].childNodes[total_fields-1].remove();
         total_fields--;
@@ -101,15 +99,24 @@
                success: function(result){
                     document.getElementById("result").innerHTML = JSON.stringify(JSON.parse(result), undefined, 2);
                 },
-                error: function(jqXHR, textStatus, errorThrown){
-                  result = {
-                      error: "Error happens while requesting!!!!!!!!!!",
-                      jqXHR: jqXHR,
-                      textStatus: textStatus,
-                      errorThrown: errorThrown
-                  };
+                error: function (jqXHR, ajaxOptions, thrownError) {   
+                    if (jqXHR.status === 0) {
+                        result = "Not connected.\nPlease verify your network connection.";
+                    } else if (jqXHR.status == 404) {
+                        result = "The requested page not found. [404]";
+                    } else if (jqXHR.status == 500) {
+                        result = "Internal Server Error [500].";
+                    } else if (exception === 'parsererror') {
+                        result = "Requested JSON parse failed.";
+                    } else if (exception === 'timeout') {
+                        result = "Time out error.";
+                    } else if (exception === 'abort') {
+                        result = "Ajax request aborted.";
+                    } else {
+                        result = "Uncaught Error.\n' + jqXHR.responseText";
+                    }
                   document.getElementById("result").innerHTML = JSON.stringify(result, undefined, 2);
-                }
+              }
             });
         
     }
