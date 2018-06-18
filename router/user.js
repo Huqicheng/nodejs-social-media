@@ -27,6 +27,10 @@ router.get("/", middlewares.checkLogin.checkLogin,function(req, res, next) {
 	});
 });
 
+router.get("/test_non_parameter", function(req, res, next){
+	res.end("hello yehefang");
+});
+
 router.post("/updateSettings", middlewares.checkLogin.checkLogin,
 			middlewares.body_parser.parse_form, function(req, res, next){
 
