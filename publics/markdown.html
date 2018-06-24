@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://www.gonjay.com/editor/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0">
+    
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/showdown.min.js"></script>
+    <script type="text/javascript" src="/js/highlight.pack.js"></script>
+    <script type="text/javascript" src="/js/marked.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/github.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
+
+    <style type="text/css">
+    img{
+        max-width: 100%;
+        height: auto;
+    }
+
+    #display  table{
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    #display th, td {
+        vertical-align: top;
+        padding: 4px 10px;
+        border: 1px solid #bbb;
+    }
+
+    #display tr:nth-child(even) td, tr:nth-child(even) th {
+        background: #eee;
+    }
+
+    </style>
+
+</head>
+
+<body class="" style="">
+    <br>
+    <div class="row">
+        <div class="col-md-5" style="margin-left: 68px;">
+            <textarea class="form-control" id="origin" rows="30"></textarea>
+            <br>
+            <a class="btn btn-default">Convert</a>
+            <br>
+        </div>
+        <div class="col-md-6">
+            <div id="display"></div>
+        </div>
+    </div>
+
+
+
+<script>
+function encodeHTML(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+
+$('.btn').click(function(){
+
+    var html = marked(encodeHTML($('#origin').val()));
+        $('#display').html(html);
+        $('code').each(function(i, e) {hljs.highlightBlock(e)});
+    });
+
+
+</script>
+
+</body></html>
