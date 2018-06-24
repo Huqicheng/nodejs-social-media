@@ -7,4 +7,12 @@ MongoDB & Redis: MongoDB for long-term storage and Redis for caching?
 
 ## Editor
 Docs: https://www.kancloud.cn/wangfupeng/wangeditor3/335782 <br>
-The output of this editor is HTML format, so in case of Cross SiteScript (xss), the front-end must call htmlspecialchars_decode() before posting to the database.
+The output of this editor is HTML format, so in case of Cross SiteScript (xss), the front-end must call htmlspecialchars_decode()(for PHP developer) or use this library: "https://cdn.bootcss.com/js-xss/0.3.3/xss.js" (for js developer) before posting to the database.
+```js
+<script src="https://cdn.bootcss.com/js-xss/0.3.3/xss.js"></script>
+<script>
+    var html = filterXSS('<script>alert(123)<\/script>');
+    alert(html);
+    //输出结果：&lt;script&gt;alert(123)&lt;/script&gt;
+</script>
+```
