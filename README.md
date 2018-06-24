@@ -13,6 +13,6 @@ The output of this editor is HTML format, so in case of Cross SiteScript (xss), 
 <script>
     var html = filterXSS('<script>alert(123)<\/script>');
     alert(html);
-    //输出结果：&lt;script&gt;alert(123)&lt;/script&gt;
+    //output：&lt;script&gt;alert(123)&lt;/script&gt;
 </script>
 ```
