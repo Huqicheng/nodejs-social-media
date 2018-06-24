@@ -21,7 +21,10 @@ app.set("view engine","ejs");
 app.set('views', path.join(__dirname, 'views'));
 // static resources
 app.use(express.static('./publics'));
-
+app.use("/avatar", express.static('./uploads/avatars'));
+app.use("/image", express.static('./uploads/images'));
+app.use("/file", express.static('./uploads/files'));
+app.use("/content", express.static('./uploads/contents'));
 
 routes(app);
 app.listen(3000);
