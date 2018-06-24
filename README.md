@@ -6,4 +6,5 @@ Using NoSQL: json string is more extendible than relations.<br>
 MongoDB & Redis: MongoDB for long-term storage and Redis for caching?
 
 ## Editor
-Docs: https://www.kancloud.cn/wangfupeng/wangeditor3/335782
+Docs: https://www.kancloud.cn/wangfupeng/wangeditor3/335782 <br>
+The output of this editor is HTML format, so in case of Cross SiteScript (xss), the front-end must call htmlspecialchars_decode() before posting to the database.
