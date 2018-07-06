@@ -27,4 +27,4 @@ app.use("/file", express.static('./uploads/files'));
 app.use("/content", express.static('./uploads/contents'));
 
 routes(app);
-app.listen(3000);
+app.listen(3001);

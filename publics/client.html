@@ -16,6 +16,7 @@
   </select>
   <input type="text" id = "URL" placeholder="URL" >
   <button type="submit" onclick="submitReq()">Submit</button>
+  <button type="submit" onclick="submitFetch()">Fetch</button>
   <div class="wrapper_field">
     
   </div>
@@ -67,6 +68,46 @@
       }
       //return false;
     });
+    function submitFetch() {
+      var para_length = document.getElementsByClassName("key-value-pair").length;//key-value-pair length
+        var fetch_object = {};//
+        var key = "";
+        var value = "";
+        var fetch_url = "";
+        var method = "";
+        for (var i = 1; i <= para_length; i++) { 
+           var id_key = 10*i+1;
+           var id_value = 10*i+2;
+           key = document.getElementById(id_key.toString()).value;
+           value = document.getElementById(id_value.toString()).value;
+           fetch_object[key] = value;
+           //console.log(key);
+           //console.log(value);
+        }
+        
+        fetch_url = document.getElementById("URL").value;
+        
+        var myselect = document.getElementById("select_method");
+        var index = myselect.selectedIndex;
+        method = myselect.options[index].value;
+
+        fetch(fetch_url,{
+            method : myselect.options[index].value,
+            body: fetch_object,
+        }).then (
+          function(response){
+            if(response.status!==200){
+                console.log("status code is："+response.status);
+                return;
+            }
+            response.json().then(function(result){
+                document.getElementById("result").innerHTML = JSON.stringify(result);
+                console.log(result);
+            });
+          }).catch(function(err){
+                        console.log("Fetch error:"+err);
+            });
+    }
     function submitReq() {
         var para_length = document.getElementsByClassName("key-value-pair").length;//key-value-pair length
         var ajax_object = {};//
