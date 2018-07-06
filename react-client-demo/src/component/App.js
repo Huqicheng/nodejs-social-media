@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'whatwg-fetch';
+import { Link } from 'react-router'
 
 class App extends Component {
   constructor(){
@@ -42,7 +43,12 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-        <button type="button" onClick = {this.fetchUsers.bind(this)}>Click Me!</button>
+        <button type="button" onClick = {this.fetchUsers}>Test fetch</button>
+        <div>
+          <Link to = "/main">
+            <button  className="btn">Go to main page </button>
+          </Link>
+        </div>
         </div>
         <textarea id="result" readOnly cols="50" rows="20" >
         </textarea>

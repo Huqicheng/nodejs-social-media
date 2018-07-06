@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './MainPage.css';
 import 'whatwg-fetch';
+import { Link } from 'react-router'
 
 class MainPage extends Component {
   constructor(props){
@@ -10,7 +11,8 @@ class MainPage extends Component {
                   items:["asdfg"]};
   }
   handleClick(event){
-    this.props.history.push("/register");
+    let path = `/login`;        
+    this.context.router.push(path);
   }
   render() {
     return (
@@ -19,7 +21,9 @@ class MainPage extends Component {
           <div className="container">
             <h1>Social-Media Project</h1>
             <h2>A place to share knowledge with other people.</h2>
-            <button onClick={this.handleClick} className="btn">get started!</button>
+            <Link to = "/login">
+              <button  className="btn">get started! </button>
+            </Link>
           </div>
         </header>
 
