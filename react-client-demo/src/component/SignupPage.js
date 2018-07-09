@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './Signup.css';
 import 'whatwg-fetch';
-import {userLogin} from '../util/soical-media-api'
-import LoginHeader from './LoginHeader'
+import {userRegister} from '../util/soical-media-api'
+import SignupHeader from './SignupHeader'
 import LogoutHeader from './LogoutHeader'
+import {browserHistory} from 'react-router'
 
 class LoginPage extends Component {
   constructor(){
@@ -24,13 +25,16 @@ class LoginPage extends Component {
   }
   handleRegisterSubmit(e){
     e.preventDefault();
-    this.setState({submitted:true});
+    if (!(this.state.password === this.state.password_confirm)){
+      alert ("please comfirm your password");
+      return;
+    } else {
+      this.setState({submitted:true});
     const fetch_object = {};
     fetch_object["username"] = this.state.username;
     fetch_object["password"] = this.state.password;
     
-    //login using backend social-media-api
-    /*
+    //Register using backend social-media-api
     userRegister().then (
         (response) => {
           if(response.status!==200){
@@ -41,14 +45,16 @@ class LoginPage extends Component {
             console.log(result);
             if (result.statusCode === "1"){
               this.setState({
-                userLoggedin : true
+                userRegistered : true
               });
-              alert("successfully login");
-              console.log(this.state.userLoggedin);
-              console.log("log in success");
+              alert("success");
+              console.log(this.state.userRegistered);
+              console.log("registering success");
+              const path = `/main`;
+              browserHistory.push(path);
             } else if (result.statusCode === "-1"){
                 alert("incorrect username or password");
-                console.log("log in failed");
+                console.log("registering failed");
             } else if (result.statusCode === "-2"){
                 console.log("database error");
             } else{
@@ -59,7 +65,9 @@ class LoginPage extends Component {
             alert("backend service failed ");
             console.log("Fetch error:"+err);
           });
-          */
+    }
+    
+          
   }
   
   render() {
@@ -69,8 +77,8 @@ class LoginPage extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">social-media project by React.</h1>
         </header>
-        {this.state.userLoggedin ?
-          (<LoginHeader userId={this.state.username} />) :
+        {this.state.userRegistered ?
+          (<SignupHeader userId={this.state.username} />) :
           (<LogoutHeader />)
         }
         <div className="col-md-6 col-md-offset-3">
@@ -93,7 +101,7 @@ class LoginPage extends Component {
               <div >
                   <label htmlFor="password_confirm">Confirm Your Password</label>
                   <input type="password" className="form-control" name="password_confirm" value={this.state.password_confirm} onChange={this.handleChange} />
-                  {this.state.submitted && !(this.state.password == this.state.password_confirm) &&
+                  {this.state.submitted && !(this.state.password === this.state.password_confirm) &&
                       <div >Please confirm your password</div>
                   }
               </div>

@@ -5,6 +5,7 @@ import 'whatwg-fetch';
 import {userLogin} from '../util/soical-media-api'
 import LoginHeader from './LoginHeader'
 import LogoutHeader from './LogoutHeader'
+import {browserHistory} from 'react-router'
 
 class LoginPage extends Component {
   constructor(){
@@ -44,6 +45,8 @@ class LoginPage extends Component {
               alert("successfully login");
               console.log(this.state.userLoggedin);
               console.log("log in success");
+              const path = `/main`;
+              browserHistory.push(path);
             } else if (result.statusCode === "-1"){
                 alert("incorrect username or password");
                 console.log("log in failed");
@@ -87,6 +90,7 @@ class LoginPage extends Component {
               alert("successfully login");
               console.log(this.state.userLoggedin);
               console.log("log in success");
+              
             } else if (result.statusCode === "-1"){
                 alert("incorrect username or password");
                 console.log("log in failed");

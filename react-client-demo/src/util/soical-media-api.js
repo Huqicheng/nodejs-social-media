@@ -26,15 +26,15 @@ function userLogout(){
   });
 }
 
-function userRegister(){
-  var url = "http://localhost:3001/user/register";
-  const fetch_object = {};
+function userRegister(fetch_object){
+  var url = "http://localhost:3001/user/login";
   return fetch(url,{
-    method : "POST",
-    body: fetch_object,
-  }).catch(function(err){
-    console.log("Fetch error:"+err);
-  });
+        method : "POST",
+        body: JSON.stringify(fetch_object),
+        headers:{
+              'Content-Type': 'application/json'
+            }
+      })
 }
 
 function userUpdatePassword(){
