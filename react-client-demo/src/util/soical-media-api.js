@@ -2,20 +2,22 @@ import 'whatwg-fetch';
 
 var BASE_URL = 'http://localhost:3001';
 
-export {userLogin, userRegister,test_non_parameter};
+export {userLogin, userLogout, userRegister,userUpdatePassword,test_non_parameter};
 
-function userLogin(){
+function userLogin(fetch_object){
   var url = "http://localhost:3001/user/login";
   return fetch(url,{
-    method : "POST",
-    body: fetch_object,
-  }).catch(function(err){
-    console.log("Fetch error:"+err);
-  });
+        method : "POST",
+        body: JSON.stringify(fetch_object),
+        headers:{
+              'Content-Type': 'application/json'
+            }
+      })
 }
 
 function userLogout(){
   var url = "${BASE_URL}/user/logout";
+  const fetch_object = {};
   return fetch(url,{
     method : "POST",
     body: fetch_object,
@@ -26,6 +28,7 @@ function userLogout(){
 
 function userRegister(){
   var url = "http://localhost:3001/user/register";
+  const fetch_object = {};
   return fetch(url,{
     method : "POST",
     body: fetch_object,
@@ -36,6 +39,7 @@ function userRegister(){
 
 function userUpdatePassword(){
   var url = "http://localhost:3001/user/updatePassword";
+  const fetch_object = {};
   return fetch(url,{
     method : "POST",
     body: fetch_object,

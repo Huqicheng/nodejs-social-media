@@ -93,7 +93,10 @@
 
         fetch(fetch_url,{
             method : myselect.options[index].value,
-            body: fetch_object,
+            body: JSON.stringify(fetch_object),
+            headers:{
+              'Content-Type': 'application/json'
+            }
         }).then (
           function(response){
             if(response.status!==200){

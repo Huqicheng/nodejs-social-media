@@ -22,7 +22,10 @@ class MainPage extends Component {
             <h1>Social-Media Project</h1>
             <h2>A place to share knowledge with other people.</h2>
             <Link to = "/login">
-              <button  className="btn">get started! </button>
+              <button className="btn" style={{marginRight: '10px'}}>Log  In </button>
+            </Link>
+            <Link to = "/signup">
+              <button className="btn">Sign up </button>
             </Link>
           </div>
         </header>
