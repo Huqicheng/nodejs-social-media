@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './MainPage.css';
 import 'whatwg-fetch';
 import { Link } from 'react-router'
+import socialmedia_imgURL from '../image/socialmedia_everywhere.png';
 
 class MainPage extends Component {
   constructor(props){
@@ -33,7 +34,7 @@ class MainPage extends Component {
         <section className="">
           <div className="container">
             <div className="col-3">
-              <img src="http://store.storeimages.cdn-apple.com/4044/as-images.apple.com/is/image/AppleInc/aos/published/images/H/D1/HD162/HD162?wid=800&hei=800&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1400749861094" alt="" className="details-img--ball"/>
+              <img src={socialmedia_imgURL} alt="" className="details-img--ball"/>
             </div>
             <div className={"col-7"}>
               <h1>Try our App.</h1>
